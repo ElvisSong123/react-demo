@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-04 11:37:59
- * @LastEditTime: 2020-11-04 15:35:15
+ * @LastEditTime: 2020-11-05 11:22:10
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \react项目练习\my-app\src\components\moveBar.js
@@ -31,7 +31,7 @@ export default class moveBar extends Component {
         }
         this.timer = null;
     }
-    move=()=>{
+    move=()=>{ 
         this.setState(()=>{
             return {
                 top:this.state.top + this.state.speedY,
@@ -73,11 +73,19 @@ export default class moveBar extends Component {
             }
         })
     }
-    render() {
-        if(this.timer) cancelAnimationFrame(this.timer);
-        this.timer = requestAnimationFrame(()=>{
-            this.move()
+    startMove=()=>{
+       this.timer = requestAnimationFrame(()=>{
+            this.move();
+            if(this.timer) cancelAnimationFrame(this.timer);
+            this.startMove();
         })
+    }
+    componentDidMount() {
+        this.startMove();
+    }
+    
+    render() { 
+        if(this.timer) cancelAnimationFrame(this.timer);
         return (
             <div className="bar" style={this.style}>
                 

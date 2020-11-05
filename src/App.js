@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-15 18:55:48
- * @LastEditTime: 2020-11-04 15:45:24
+ * @LastEditTime: 2020-11-05 11:21:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \井字棋\my-app\src\App.js
@@ -34,7 +34,7 @@ function createBar(arr){
   })
 }
 function App() { 
-  let arr = new Array(10).fill(1);
+  let arr = new Array(20).fill(1);
   let newArr = createBar(arr);
   console.log(newArr);
   return (
