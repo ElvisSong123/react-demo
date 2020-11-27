@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-10-15 18:55:48
- * @LastEditTime: 2020-10-26 10:40:40
+ * @LastEditTime: 2020-11-27 14:15:58
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \井字棋\my-app\src\App.js
@@ -36,9 +36,12 @@ class Content extends Component {
       let res = this.countNum(position, userArr)
       if (res) {
         setTimeout(()=>{
-          window.confirm(`${position[2]}赢了`);
-          console.log(this.boxRef,'boxref')
-          this.boxRef.current.clearContent();
+          window.confirm(`${position[2]}赢了`); 
+          this.state.contentArr.forEach((ele)=>{
+            if(typeof ele[3] == 'function'){
+              ele[3]()
+            }
+          }) 
         },200)
       }
     }
@@ -55,15 +58,13 @@ class Content extends Component {
           userArr.some((ele) => {
             return ele[0] == posiX && ele[1] == i
           })
-        ) {
-          console.log('success')
+        ) { 
           this.state.count++
           if (this.state.count == this.state.piece) {
             winState = true
             return true
           }
-        } else {
-          console.log('fail1')
+        } else { 
           break
         }
       }
@@ -72,15 +73,13 @@ class Content extends Component {
           userArr.some((ele) => {
             return ele[0] == posiX && ele[1] == i
           })
-        ) {
-          console.log('success1')
+        ) { 
           this.state.count++
           if (this.state.count == this.state.piece) {
             winState = true
             return true
           }
-        } else {
-          console.log('fail2')
+        } else { 
 
           break
         }
@@ -94,15 +93,13 @@ class Content extends Component {
           userArr.some((ele) => {
             return ele[0] == i && ele[1] == posiY
           })
-        ) {
-          console.log('success')
+        ) { 
           this.state.count++
           if (this.state.count == this.state.piece) {
             winState = true
             return true
           }
-        } else {
-          console.log('fail1')
+        } else { 
           break
         }
       }
@@ -111,8 +108,7 @@ class Content extends Component {
           userArr.some((ele) => {
             return ele[0] == i && ele[1] == posiY
           })
-        ) {
-          console.log('success1')
+        ) { 
           this.state.count++
           if (this.state.count == this.state.piece) {
             winState = true
@@ -206,8 +202,7 @@ class Content extends Component {
           break
         }
       }
-    }
-    console.log(winState)
+    } 
     return winState
   }
   renderBox(index) {
@@ -235,7 +230,7 @@ class Content extends Component {
         </div>
       )
     }
-    return <div> {rendArr} </div>
+    return <div ref={this.boxRef}> {rendArr} </div>
   }
 }
 
@@ -258,15 +253,13 @@ class Box extends Component {
         position: this.props.position,
         user: global.currentUser % 2 == 0 ? '玩家1' : '玩家2',
       },
-      () => {
-        console.log(this.state)
+      () => { 
         this.repaint()
-        this.props.boxClick([...this.props.position, this.state.user])
+        this.props.boxClick([...this.props.position, this.state.user,this.clearContent])
       }
     )
   }
-  clearContent = () => {
-    console.log('触发了');
+  clearContent = () => { 
     this.setState(
       ()=>{
         return {
@@ -282,9 +275,7 @@ class Box extends Component {
       }) 
 
   }
-  returnClass() {
-    console.log('执行了returnclass');
-    console.log(this.state.user,'user');
+  returnClass() {  
     if (this.state.user == '玩家1'){
       this.state.className = 'box red'
     }
@@ -305,8 +296,7 @@ class Box extends Component {
   }
 }
 
-function App() {
-  console.log(Content)
+function App() { 
   return (
     <div className="App">
       <Content> </Content>
